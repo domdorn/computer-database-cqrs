@@ -4,7 +4,7 @@ import org.axonframework.commandhandling.CommandExecutionException;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import play.api.modules.spring.Spring;
 import play.api.mvc.Call;
-import play.api.templates.Html;
+import play.twirl.api.Html;
 import play.data.Form;
 import play.mvc.Result;
 import scala.Function1;

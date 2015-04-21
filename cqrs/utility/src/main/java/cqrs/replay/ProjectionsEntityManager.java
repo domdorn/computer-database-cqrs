@@ -1,9 +1,12 @@
 package cqrs.replay;
 
+import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,10 +136,35 @@ public class ProjectionsEntityManager implements EntityManager
     }
 
     @Override
+    public StoredProcedureQuery createNamedStoredProcedureQuery(String name) {
+        throw new IllegalStateException("not implemented");
+    }
+
+    @Override
+    public StoredProcedureQuery createStoredProcedureQuery(String procedureName) {
+        throw new IllegalStateException("not implemented");
+    }
+
+    @Override
+    public StoredProcedureQuery createStoredProcedureQuery(String procedureName, Class... resultClasses) {
+        throw new IllegalStateException("not implemented");
+    }
+
+    @Override
+    public StoredProcedureQuery createStoredProcedureQuery(String procedureName, String... resultSetMappings) {
+        throw new IllegalStateException("not implemented");
+    }
+
+    @Override
     @Transactional
     public void joinTransaction()
     {
         this.em.joinTransaction();
+    }
+
+    @Override
+    public boolean isJoinedToTransaction() {
+        throw new IllegalStateException("not implemented");
     }
 
     @Override
@@ -170,108 +198,138 @@ public class ProjectionsEntityManager implements EntityManager
     @Override
     public <T> T find(Class<T> entityClass, Object primaryKey, Map<String, Object> properties)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.find(entityClass,primaryKey,properties);
     }
 
     @Override
     public <T> T find(Class<T> entityClass, Object primaryKey, LockModeType lockMode)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.find(entityClass,primaryKey,lockMode);
     }
 
     @Override
     public <T> T find(Class<T> entityClass, Object primaryKey, LockModeType lockMode, Map<String, Object> properties)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.find(entityClass,primaryKey,lockMode,properties);
     }
 
     @Override
     public void lock(Object entity, LockModeType lockMode, Map<String, Object> properties)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.lock(entity,lockMode,properties);
     }
 
     @Override
     public void refresh(Object entity, Map<String, Object> properties)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.refresh(entity,properties);
     }
 
     @Override
     public void refresh(Object entity, LockModeType lockMode)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.refresh(entity,lockMode);
     }
 
     @Override
     public void refresh(Object entity, LockModeType lockMode, Map<String, Object> properties)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.refresh(entity,lockMode,properties);
     }
 
     @Override
     public void detach(Object entity)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.detach(entity);
     }
 
     @Override
     public LockModeType getLockMode(Object entity)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.getLockMode(entity);
     }
 
     @Override
     public void setProperty(String propertyName, Object value)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.setProperty(propertyName, value);
     }
 
     @Override
     public Map<String, Object> getProperties()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.getProperties();
     }
 
     @Override
     public <T> TypedQuery<T> createQuery(CriteriaQuery<T> criteriaQuery)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.createQuery(criteriaQuery);
+    }
+
+    @Override
+    public Query createQuery(CriteriaUpdate updateQuery) {
+        return em.createQuery(updateQuery);
+    }
+
+    @Override
+    public Query createQuery(CriteriaDelete deleteQuery) {
+        return em.createQuery(deleteQuery);
     }
 
     @Override
     public <T> TypedQuery<T> createQuery(String qlString, Class<T> resultClass)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.createQuery(qlString, resultClass);
     }
 
     @Override
     public <T> TypedQuery<T> createNamedQuery(String name, Class<T> resultClass)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.createNamedQuery(name, resultClass);
     }
 
     @Override
     public <T> T unwrap(Class<T> cls)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.unwrap(cls);
     }
 
     @Override
     public EntityManagerFactory getEntityManagerFactory()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.getEntityManagerFactory();
     }
 
     @Override
     public CriteriaBuilder getCriteriaBuilder()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.getCriteriaBuilder();
     }
 
     @Override
     public Metamodel getMetamodel()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.getMetamodel();
+    }
+
+    @Override
+    public <T> EntityGraph<T> createEntityGraph(Class<T> rootType) {
+        throw new IllegalStateException("not implemented");
+    }
+
+    @Override
+    public EntityGraph<?> createEntityGraph(String graphName) {
+        return this.em.createEntityGraph(graphName);
+    }
+
+    @Override
+    public EntityGraph<?> getEntityGraph(String graphName) {
+        return this.em.getEntityGraph(graphName);
+    }
+
+    @Override
+    public <T> List<EntityGraph<? super T>> getEntityGraphs(Class<T> entityClass) {
+        return this.em.getEntityGraphs(entityClass);
     }
 }

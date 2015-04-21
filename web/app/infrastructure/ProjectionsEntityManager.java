@@ -4,8 +4,11 @@ import play.db.jpa.JPA;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
+import java.util.List;
 import java.util.Map;
 
 public class ProjectionsEntityManager implements EntityManager
@@ -208,6 +211,61 @@ public class ProjectionsEntityManager implements EntityManager
     @Override
     public Metamodel getMetamodel() {
         return JPA.em().getMetamodel();
+    }
+
+    @Override
+    public <T> EntityGraph<T> createEntityGraph(Class<T> aClass) {
+        return JPA.em().createEntityGraph(aClass);
+    }
+
+    @Override
+    public Query createQuery(CriteriaUpdate criteriaUpdate) {
+        return JPA.em().createQuery(criteriaUpdate);
+    }
+
+    @Override
+    public Query createQuery(CriteriaDelete criteriaDelete) {
+        return JPA.em().createQuery(criteriaDelete);
+    }
+
+    @Override
+    public StoredProcedureQuery createNamedStoredProcedureQuery(String s) {
+        return JPA.em().createNamedStoredProcedureQuery(s);
+    }
+
+    @Override
+    public StoredProcedureQuery createStoredProcedureQuery(String s) {
+        return JPA.em().createStoredProcedureQuery(s);
+    }
+
+    @Override
+    public StoredProcedureQuery createStoredProcedureQuery(String s, Class... classes) {
+        return JPA.em(). createStoredProcedureQuery(s,classes);
+    }
+
+    @Override
+    public StoredProcedureQuery createStoredProcedureQuery(String s, String... strings) {
+        return JPA.em().createStoredProcedureQuery(s,strings);
+    }
+
+    @Override
+    public boolean isJoinedToTransaction() {
+        return JPA.em().isJoinedToTransaction();
+    }
+
+    @Override
+    public EntityGraph<?> createEntityGraph(String s) {
+        return JPA.em().createEntityGraph(s);
+    }
+
+    @Override
+    public EntityGraph<?> getEntityGraph(String s) {
+        return JPA.em().getEntityGraph(s);
+    }
+
+    @Override
+    public <T> List<EntityGraph<? super T>> getEntityGraphs(Class<T> aClass) {
+        return JPA.em().getEntityGraphs(aClass);
     }
 }
 
